@@ -26,7 +26,10 @@ void ETHEntityArray::Release()
 
 void ETHEntityArray::push_back(ETHEntityRawPtr p)
 {
+	p->BREAK_ON_REF_CHANGE = false;
 	p->AddRef();
+	p->BREAK_ON_REF_CHANGE = true;
+
 	m_vector.push_back(p);
 }
 
@@ -74,7 +77,9 @@ void ETHEntityArray::clear()
 		{
 			if (m_vector[t])
 			{
+				m_vector[t]->BREAK_ON_REF_CHANGE = false;
 				m_vector[t]->Release();
+				m_vector[t]->BREAK_ON_REF_CHANGE = true;
 			}
 		}
 	}
@@ -114,7 +119,9 @@ void ETHEntityArray::removeDeadEntities()
 	{
 		if (!((*iter)->IsAlive()))
 		{
+			(*iter)->BREAK_ON_REF_CHANGE = false;
 			(*iter)->Release();
+			(*iter)->BREAK_ON_REF_CHANGE = true;
 			iter = m_vector.erase(iter);
 		}
 		else

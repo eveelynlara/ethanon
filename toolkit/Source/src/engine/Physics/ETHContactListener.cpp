@@ -80,8 +80,10 @@ void ETHContactListener::BeginContact(b2Contact* contact)
 		normal,
 		ETHPhysicsEntityController::CONTACT_CALLBACKS::BEGIN))
 	{
+		entityB->BREAK_ON_REF_CHANGE = false;
 		controllerA->RunBeginContactCallback(entityB, point0, point1, normal);
 		controllerB->RunBeginContactCallback(entityA, point0, point1, normal);
+		entityB->BREAK_ON_REF_CHANGE = true;
 	}
 }
 
@@ -103,8 +105,10 @@ void ETHContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManif
 		normal,
 		ETHPhysicsEntityController::CONTACT_CALLBACKS::PRESOLVE))
 	{
+		entityB->BREAK_ON_REF_CHANGE = false;
 		controllerA->RunPreSolveContactCallback(entityB, point0, point1, normal);
 		controllerB->RunPreSolveContactCallback(entityA, point0, point1, normal);
+		entityB->BREAK_ON_REF_CHANGE = true;
 	}
 
 	// disable the contact if the Disable[Next]Contact has been called in the contact callback script code

@@ -56,7 +56,9 @@ bool ETHActiveEntityHandler::AddStaticCallbackWhenEligible(ETHRenderEntity* enti
 	if (IsStaticCallbackEligible(entity))
 	{
 		m_lastFrameCallbacks.push_back(entity);
+		entity->BREAK_ON_REF_CHANGE = false;
 		entity->AddRef();
+		entity->BREAK_ON_REF_CHANGE = true;
 		return true;
 	}
 	else
@@ -139,7 +141,9 @@ void ETHActiveEntityHandler::UpdateCurrentFrameEntities(const Vector2& zAxisDir,
 				entity->RunCallbackScript();
 			}
 		}
+		entity->BREAK_ON_REF_CHANGE = false;
 		entity->Release();
+		entity->BREAK_ON_REF_CHANGE = true;
 		iter = m_lastFrameCallbacks.erase(iter);
 	}
 }

@@ -857,16 +857,42 @@ bool ETHSpriteEntity::ParticlesKilled(const unsigned int n) const
 	return m_particles[n]->Killed();
 }
 
+bool ETHEntity::BREAK_ON_REF_CHANGE = true;
+const std::string ENTITY_TO_TRACK = "asantee_floor.ent";
+
+static int step = 0;
+
 void ETHSpriteEntity::AddRef()
 {
 	++m_ref;
+	if (GetEntityName() == ENTITY_TO_TRACK)
+	{
+		if (BREAK_ON_REF_CHANGE)
+		{
+			std::cout << (++step) << " - " << "AddRef: " << m_ref << std::endl;
+		}
+	}
 }
 
 void ETHSpriteEntity::Release()
 {
+	const std::string entityName = GetEntityName();
+	unsigned int ref;
 	if (--m_ref == 0)
 	{
+		ref = m_ref;
 		delete this;
+	}
+	else
+	{
+		ref = m_ref;
+	}
+	if (entityName == ENTITY_TO_TRACK)
+	{
+		if (BREAK_ON_REF_CHANGE)
+		{
+			std::cout << (++step) << " - " << "Release: " << ref << std::endl;
+		}
 	}
 }
 

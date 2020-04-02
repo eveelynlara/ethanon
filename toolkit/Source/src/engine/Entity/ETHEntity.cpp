@@ -899,6 +899,12 @@ void ETHEntity::Kill()
 {
 	ETHScriptEntity::Kill();
 	m_controller->Destroy();
+
+	/*if (m_gcDict)
+	{
+		m_gcDict->Release();
+		m_gcDict = 0;
+	}*/
 }
 
 bool ETHEntity::IsFixedRotation() const

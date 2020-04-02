@@ -15,6 +15,8 @@ class ETHEntity : public ETHScriptEntity
 {
 	friend class ETHScene;
 public:
+	static bool BREAK_ON_REF_CHANGE;
+
 	static float ComputeDepth(const float height, const float maxHeight, const float minHeight);
 
 	ETHEntity(const std::string& filePath, const int nId, const Platform::FileManagerPtr& fileManager);
